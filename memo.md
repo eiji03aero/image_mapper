@@ -73,6 +73,8 @@ AreaRects {
 }
 
 Image {
+  imageUrl: <string>,
+  imageFile: <string>,
   width: <number>,
   height: <number>,
   naturalWidth: <number>,
