@@ -45,7 +45,7 @@
 ### Data
 ```
 ImageMapper {
-  status: <enum Standby
+  appStatus: <enum Standby
     | CreateRect
     | EditRect
     | EditRectContent

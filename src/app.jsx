@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageMapperContainer } from "./containers/ImageMapperContainer.js";
+import { ImageMapperContainer } from "./containers/ImageMapperContainer.jsx";
 
 export const App = (props) => {
   return (
