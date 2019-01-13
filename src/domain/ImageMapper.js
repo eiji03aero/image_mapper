@@ -1,7 +1,7 @@
 import { AreaRect } from "./AreaRect.js";
 import { AreaRectCollection } from "./AreaRectCollection.js";
 import { Canvas } from "./Canvas.js";
-import { Image } from "./Image.js";
+import { BackdropImage } from "./BackdropImage.js";
 import { Menu } from "./Menu.js";
 import { RectContentEditor } from "./RectContentEditor.js";
 
@@ -12,12 +12,23 @@ export class ImageMapper {
     this.appStatus     = AppStatus.Standby;
     this.canvas        = new Canvas();
     this.rects         = new AreaRectCollection();
-    this.image         = new Image();
+    this.backdropImage = new BackdropImage();
     this.menu          = new Menu();
     this.contentEditor = new RectContentEditor();
   }
 
+  get isStandby () { return this.appStatus === AppStatus.Standby; }
+
   updateAppStatus (status) {
     this.appStatus = status;
+  }
+
+  setImageFile (file) {
+    this.backdropImage.setImageFile(file);
+    this.updateAppStatus(AppStatus.CreateRect);
+  }
+
+  setBackdropImageDimention (params) {
+    this.backdropImage.setDimention(params);
   }
 }

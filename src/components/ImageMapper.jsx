@@ -1,16 +1,55 @@
 import React from "react";
+import styled from "styled-components";
 
+import { StandbyContainer } from "../containers/StandbyContainer.jsx";
+import { CanvasContainer } from "../containers/CanvasContainer.jsx";
 import { MenuContainer } from "../containers/MenuContainer.jsx";
+import { FileInputContainer } from "../containers/FileInputContainer.jsx";
+
+import color from "../utils/color.js";
+
+const ImageMapperWrapperStyled = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${color.lightBlueGrey};
+  border: 1px solid ${color.blueGrey}
+  border-radius: .5rem;
+`;
+
+const ImageMapperStyled = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
 
 export class ImageMapper extends React.Component {
+  constructor (props) {
+    super(props);
+    this.box = React.createRef();
+  }
+
+  componentDidMount () {
+    this.props.onRegisterImageMapper(this.box.current);
+  }
+
   render () {
     return (
-      <div>
-        <h1>image mapper</h1>
-        <h3>{this.props.imageMapper.appStatus}</h3>
-        <hr />
-        <MenuContainer/>
-      </div>
+      <ImageMapperWrapperStyled>
+        <ImageMapperStyled ref={this.box}>
+          {this.props.imageMapper.isStandby ? (
+            <StandbyContainer/>
+          ) : (
+            <CanvasContainer/>
+          )}
+
+          <MenuContainer/>
+
+          <FileInputContainer/>
+
+        </ImageMapperStyled>
+      </ImageMapperWrapperStyled>
     );
   }
 }

@@ -14,17 +14,22 @@
 ### Component structure
 
 - ImageMapper
-  - Canvas
-    - [ AreaRect ]
-  - Image
+  - [imageMapper.isStandby &&
+    - Standby
+  ,
+    - Canvas
+      - BackdropImage
+      - [ AreaRect ]
+  ]
   - RectContentEditor
   - Menu
+  - FileInput
 
 ### Domain models
 - ImageMapper
 - Canvas
 - AreaRect
-- Image
+- BackdropImage
 - RectContentEditor
 - Menu
 
@@ -52,7 +57,7 @@ ImageMapper {
     >,
   canvas: Canvas,
   rects: [ AreaRects ],
-  image: Image,
+  backdropimage: BackdropImage,
   contentEditor: RectContentEditor,
   menu: Menu,
 }
@@ -61,7 +66,7 @@ Canvas {
 }
 
 AreaRects {
-  status: <enum Saved | Editing>,
+  status: <enum Created | Valid | Invalid>,
   x1: <number>,
   x2: <number>,
   y1: <number>,
@@ -72,14 +77,13 @@ AreaRects {
   }
 }
 
-Image {
+BackdropImage {
   imageUrl: <string>,
   imageFile: <string>,
   width: <number>,
   height: <number>,
   naturalWidth: <number>,
   naturalHeight: <number>,
-  ratio: <number>,
 }
 
 RectContentEditor {
