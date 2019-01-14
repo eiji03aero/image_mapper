@@ -25,38 +25,30 @@ const ImageMapperStyled = styled.div`
   height: 100%;
 `;
 
-export class ImageMapper extends React.Component {
-  constructor (props) {
-    super(props);
-    this.box = React.createRef();
-  }
+export const ImageMapper = ({
+  imageMapper,
+  targetRectId,
+}) => {
+  return (
+    <ImageMapperWrapperStyled>
+      <ImageMapperStyled>
 
-  componentDidMount () {
-    this.props.onRegisterImageMapper(this.box.current);
-  }
+        { imageMapper.isStandby ? (
+          <StandbyContainer/>
+        ) : (
+          <React.Fragment>
+            <CanvasContainer/>
+            <MenuContainer/>
+          </React.Fragment>
+        )}
 
-  render () {
-    return (
-      <ImageMapperWrapperStyled>
-        <ImageMapperStyled ref={this.box}>
+        { imageMapper.isEditRectContent && targetRectId && (
+          <RectContentEditorContainer/>
+        )}
 
-          { this.props.imageMapper.isStandby ? (
-            <StandbyContainer/>
-          ) : (
-            <React.Fragment>
-              <CanvasContainer/>
-              <MenuContainer/>
-            </React.Fragment>
-          )}
+        <FileInputContainer/>
 
-          { this.props.imageMapper.isEditRectContent && this.props.targetRectId && (
-            <RectContentEditorContainer/>
-          )}
-
-          <FileInputContainer/>
-
-        </ImageMapperStyled>
-      </ImageMapperWrapperStyled>
-    );
-  }
-}
+      </ImageMapperStyled>
+    </ImageMapperWrapperStyled>
+  );
+};

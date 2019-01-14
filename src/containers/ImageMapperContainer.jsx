@@ -49,7 +49,6 @@ export class ImageMapperContainer extends React.Component {
     );
   }
 
-  registerImageMapper = (element) => { this.doms.imageMapper = element; }
   registerCanvas      = (element) => { this.doms.canvas      = element; }
   registerFileInput   = (element) => { this.doms.fileInput   = element; }
 
@@ -140,7 +139,6 @@ export class ImageMapperContainer extends React.Component {
     return {
       ...this.state,
       doms: this.doms,
-      onRegisterImageMapper: this.registerImageMapper,
       onRegisterCanvas: this.registerCanvas,
       onRegisterFileInput: this.registerFileInput,
 

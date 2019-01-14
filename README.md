@@ -24,22 +24,19 @@
 
 ### Domain models
 - ImageMapper
-- Canvas
-- AreaRect
-- AreaRectCollection
-- BackdropImage
-- RectContentEditor
-- Menu
+  - AreaRectCollection
+    - [ AreaRect ]
+  - BackdropImage
 
 ### Architecture
 - Domain model
+- Context provider
 - Container component
   - Context consumer
-- Context provider
-- UI component
+    - UI component
 
 #### steps
-  - Descendents receive state and methods from the outtest container thrugh context
+  - Descendents receive state and methods from the outtest container via context
   - Descendents dispatch methods
   - trigger domain model's methods to change its internal state
   - trigger setState with updated domain model
@@ -53,14 +50,8 @@ ImageMapper {
     | EditRect
     | EditRectContent
     >,
-  canvas: Canvas,
   areaRectCollection: AreaRectCollection,
   backdropimage: BackdropImage,
-  contentEditor: RectContentEditor,
-  menu: Menu,
-}
-
-Canvas {
 }
 
 AreaRectCollection {
@@ -88,13 +79,5 @@ BackdropImage {
   height: <number>,
   naturalWidth: <number>,
   naturalHeight: <number>,
-}
-
-RectContentEditor {
-  rect: Rect,
-  valid: <boolean>,
-}
-
-Menu {
 }
 ```

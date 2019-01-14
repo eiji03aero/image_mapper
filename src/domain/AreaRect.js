@@ -28,6 +28,12 @@ export class AreaRect {
 
   get isCreating () { return this.status === AreaRectStatus.Creating; }
 
+  get valid () {
+    return (
+      !!this.content.type && !!this.content.text
+    );
+  }
+
   get hasValidSize () {
     return (
       ( this.x2 - this.x1 ) > 0.01 &&
@@ -52,12 +58,5 @@ export class AreaRect {
     this.status = this.valid
       ? AreaRectStatus.Valid
       : AreaRectStatus.Invalid;
-  }
-
-  /* -------------------- Private methods -------------------- */
-  get valid () {
-    return (
-      !!this.content.type && !!this.content.text
-    );
   }
 }
