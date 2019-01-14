@@ -7,9 +7,18 @@ export class AreaRectCollection {
   constructor () {
     this.areaRects = [];
     this.createStartPoint = { x: 0, y: 0 };
+    this.draggingPoint = { x: 0, y: 0 };
   }
 
   get all () { return this.areaRects; }
+
+  find (id) {
+    return _.find(this.areaRects, rect => rect.id === id);
+  }
+
+  remove (id) {
+    this.areaRects = _.filter(this.areaRects, rect => rect.id !== id);
+  }
 
   addNew (params) {
     this.createStartPoint = { x: params.x1, y: params.y1 };
@@ -34,11 +43,38 @@ export class AreaRectCollection {
     this.areaRects = this.validateRects();
   }
 
-  /* -------------------- Private methods -------------------- */
-  validateRects () {
-    return _.map(this.areaRects, (rect) => {
-      rect.validate();
+  startDraggingRect ({ id, x, y }) {
+    this.draggingPoint = { x: x, y: y };
+  }
+
+  draggingRect ({ id, x, y }) {
+    this.areaRects = _.map(this.areaRects, (rect) => {
+      if (rect.id === id) {
+        const diffX = x - this.draggingPoint.x;
+        const diffY = y - this.draggingPoint.y;
+        rect.updatePoint({
+          x1: rect.x1 + diffX,
+          x2: rect.x2 + diffX,
+          y1: rect.y1 + diffY,
+          y2: rect.y2 + diffY,
+        });
+        this.draggingPoint = { x: x, y: y };
+      }
       return rect;
     });
+  }
+
+  finishDraggingRect () {
+    this.areaRects = this.validateRects();
+  }
+
+  /* -------------------- Private methods -------------------- */
+  validateRects () {
+    return _.reduce(this.areaRects, (accum, rect) => {
+      rect.validate();
+      return rect.hasValidSize
+        ? _.concat(accum, rect)
+        : accum;
+    }, []);
   }
 }

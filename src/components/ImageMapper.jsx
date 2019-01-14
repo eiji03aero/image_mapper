@@ -38,13 +38,15 @@ export class ImageMapper extends React.Component {
     return (
       <ImageMapperWrapperStyled>
         <ImageMapperStyled ref={this.box}>
+
           {this.props.imageMapper.isStandby ? (
             <StandbyContainer/>
           ) : (
-            <CanvasContainer/>
+            <React.Fragment>
+              <CanvasContainer/>
+              <MenuContainer/>
+            </React.Fragment>
           )}
-
-          <MenuContainer/>
 
           <FileInputContainer/>
 

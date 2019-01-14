@@ -19,6 +19,8 @@ export class ImageMapper {
 
   get isStandby () { return this.appStatus === AppStatus.Standby; }
   get isCreateRect () { return this.appStatus === AppStatus.CreateRect; }
+  get isEditRect () { return this.appStatus === AppStatus.EditRect; }
+  get isEditRectContent () { return this.appStatus === AppStatus.EditRectContent; }
 
   updateAppStatus (status) {
     this.appStatus = status;
@@ -43,5 +45,21 @@ export class ImageMapper {
 
   commitNewRect () {
     this.areaRectCollection.commitNewRect();
+  }
+
+  startDraggingRect (params) {
+    this.areaRectCollection.startDraggingRect(params);
+  }
+
+  draggingRect (params) {
+    this.areaRectCollection.draggingRect(params);
+  }
+
+  finishDraggingRect () {
+    this.areaRectCollection.finishDraggingRect();
+  }
+
+  removeRect (id) {
+    this.areaRectCollection.remove(id);
   }
 }

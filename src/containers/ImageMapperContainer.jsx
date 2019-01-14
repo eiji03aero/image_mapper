@@ -10,7 +10,7 @@ function updateState ({ descriptor }) {
   const decorated = descriptor.value;
   descriptor.value = function (...args) {
     const result = decorated.apply(this, args);
-    this.setState({ imageMapper: this.state.imageMapper });
+    this.setState((pre) => ({ imageMapper: pre.imageMapper }));
   };
 };
 
@@ -19,6 +19,7 @@ export class ImageMapperContainer extends React.Component {
     super(props);
     this.state = {
       imageMapper: new ImageMapperDomain(),
+      targetRectId: null,
     };
 
     this.doms = {
@@ -28,11 +29,23 @@ export class ImageMapperContainer extends React.Component {
     };
 
     this.isCanvasDragging = false;
+    this.isRectDragging = false;
 
     _.bindAll(this, [
       'updateAppStatus', 'setImageFile', 'setBackdropImageDimention',
       'addNewRect', 'updateNewRectStyle', 'commitNewRect',
+      'setTargetRect', 'unsetTargetRect',
+      'startDraggingRect', 'draggingRect', 'finishDraggingRect',
+      'removeRect',
     ]);
+  }
+
+  render () {
+    return (
+      <Context.Provider value={this.contextData}>
+        <ImageMapper { ...this.contextData } />
+      </Context.Provider>
+    );
   }
 
   registerImageMapper = (element) => { this.doms.imageMapper = element; }
@@ -78,12 +91,40 @@ export class ImageMapperContainer extends React.Component {
     this.isCanvasDragging = false;
   }
 
-  render () {
-    return (
-      <Context.Provider value={this.contextData}>
-        <ImageMapper { ...this.contextData } />
-      </Context.Provider>
-    );
+  @updateState
+  setTargetRect (e, id) {
+    this.setState({ targetRectId: id })
+  }
+
+  @updateState
+  unsetTargetRect (e) {
+    this.setState({ targetRectId: null });
+  }
+
+  @updateState
+  startDraggingRect (e, id) {
+    const point = this.getCurrentPoint(e);
+    this.state.imageMapper.startDraggingRect({ id, x: point.x, y: point.y });
+    this.isRectDragging = true;
+  }
+
+  @updateState
+  draggingRect (e, id) {
+    if (this.isRectDragging) {
+      const point = this.getCurrentPoint(e);
+      this.state.imageMapper.draggingRect({ id, x: point.x, y: point.y });
+    }
+  }
+
+  @updateState
+  finishDraggingRect (e, id) {
+    this.state.imageMapper.finishDraggingRect();
+    this.isRectDragging = false;
+  }
+
+  @updateState
+  removeRect (id) {
+    this.state.imageMapper.removeRect(id);
   }
 
   /* -------------------- Private methods -------------------- */
@@ -94,15 +135,23 @@ export class ImageMapperContainer extends React.Component {
       onRegisterImageMapper: this.registerImageMapper,
       onRegisterCanvas: this.registerCanvas,
       onRegisterFileInput: this.registerFileInput,
+
       // Menu
       onUpdateAppStatus: this.updateAppStatus,
+
       // BackdropImage
       onSetImageFile: this.setImageFile,
       onSetBackdropImageDimention: this.setBackdropImageDimention,
+
       // Canvas
       onCanvasMouseDown: this.onCanvasMouseDown,
       onCanvasMouseMove: this.onCanvasMouseMove,
       onCanvasMouseUp: this.onCanvasMouseUp,
+      onClickRect: this.onClickRect,
+      onStartDraggingRect: this.startDraggingRect,
+      onDraggingRect: this.draggingRect,
+      onFinishDraggingRect: this.finishDraggingRect,
+      onRemoveRect: this.removeRect,
     };
   }
 
@@ -120,7 +169,17 @@ export class ImageMapperContainer extends React.Component {
 
   get onCanvasMouseUp () {
     return (
-      this.state.imageMapper.isCreateRect ? this.commitNewRect : f => f
+      this.state.imageMapper.isCreateRect ? this.commitNewRect :
+      ( this.state.imageMapper.isEditRect ||
+        this.state.imageMapper.isEditRectContent ) ?  this.unsetTargetRect :
+      f => f
+    );
+  }
+
+  get onClickRect () {
+    return (
+      ( this.state.imageMapper.isEditRect ||
+        this.state.imageMapper.isEditRectContent ) ? this.setTargetRect : f => f
     );
   }
 

@@ -35,14 +35,22 @@ export class Canvas extends React.Component {
 
         <BackdropImageContainer />
 
-        {_.map(this.props.areaRects, (rect, i) => (
+        { _.map(this.props.areaRects, (rect, i) => (
           <AreaRect
             key={i}
+            id={rect.id}
+            active={this.props.targetRectId === rect.id}
+            appStatus={this.props.appStatus}
             status={rect.status}
             x1={rect.x1}
             x2={rect.x2}
             y1={rect.y1}
             y2={rect.y2}
+            onClickRect={this.props.onClickRect}
+            onStartDraggingRect={this.props.onStartDraggingRect}
+            onDraggingRect={this.props.onDraggingRect}
+            onFinishDraggingRect={this.props.onFinishDraggingRect}
+            onRemoveRect={this.props.onRemoveRect}
           />
         ))}
 

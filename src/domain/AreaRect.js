@@ -27,6 +27,13 @@ export class AreaRect {
 
   get isCreating () { return this.status === AreaRectStatus.Creating; }
 
+  get hasValidSize () {
+    return (
+      ( this.x2 - this.x1 ) > 0.01 &&
+      ( this.y2 - this.y1 ) > 0.01
+    );
+  }
+
   updatePoint (params) {
     this.x1 = params.x1 || this.x1;
     this.x2 = params.x2 || this.x2;

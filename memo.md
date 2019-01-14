@@ -68,6 +68,7 @@ Canvas {
 
 AreaRectCollection {
   createStartPoint: { x: <number>, y: <number> },
+  draggingPoint: { x: <number>, y: <number> },
   areaRects: [ AreaRect ],
 }
 
