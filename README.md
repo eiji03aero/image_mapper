@@ -1,8 +1,7 @@
 ## ImageMapper
-
+- Interactive editor for mapping rects on images
 
 ### Feature
-
 - creates rects
 - drag/remove rects
 - edit the content for rects
@@ -12,15 +11,13 @@
 
 
 ### Component structure
-
 - ImageMapper
-  - [imageMapper.isStandby &&
+  - imageMapper.isStandby &&
     - Standby
-  ,
+  - ( imagemapper.isEditRect || imageMapper.isEditRectContent ) &&
     - Canvas
       - BackdropImage
       - [ AreaRect ]
-  ]
   - RectContentEditor
   - Menu
   - FileInput
@@ -41,7 +38,7 @@
 - Context provider
 - UI component
 
-- steps
+#### steps
   - Descendents receive state and methods from the outtest container thrugh context
   - Descendents dispatch methods
   - trigger domain model's methods to change its internal state
