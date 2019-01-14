@@ -37,6 +37,7 @@ export class ImageMapperContainer extends React.Component {
       'setTargetRect', 'unsetTargetRect',
       'startDraggingRect', 'draggingRect', 'finishDraggingRect',
       'removeRect',
+      'updateRectContent',
     ]);
   }
 
@@ -127,6 +128,13 @@ export class ImageMapperContainer extends React.Component {
     this.state.imageMapper.removeRect(id);
   }
 
+  /* -------------------- RectContentEditor -------------------- */
+  @updateState
+  updateRectContent (id, data) {
+    this.state.imageMapper.updateRectContent(id, data);
+    this.unsetTargetRect();
+  }
+
   /* -------------------- Private methods -------------------- */
   get contextData () {
     return {
@@ -152,6 +160,10 @@ export class ImageMapperContainer extends React.Component {
       onDraggingRect: this.draggingRect,
       onFinishDraggingRect: this.finishDraggingRect,
       onRemoveRect: this.removeRect,
+
+      // RectContentEditor
+      onUpdateRectContent: this.updateRectContent,
+      onCancelEditRectContent: this.unsetTargetRect,
     };
   }
 

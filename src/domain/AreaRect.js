@@ -1,5 +1,6 @@
-import { AreaRectStatus, AreaRectContentType } from "../constants.js";
 import uuid from "uuid/v4";
+
+import { AreaRectStatus, AreaRectContentType } from "../constants.js";
 
 export class AreaRect {
   constructor ({
@@ -41,6 +42,12 @@ export class AreaRect {
     this.y2 = params.y2 || this.y2;
   }
 
+  updateContent (data) {
+    this.content.type = data.type || this.content.type;
+    this.content.text = data.text || this.content.text;
+    this.validate();
+  }
+
   validate () {
     this.status = this.valid
       ? AreaRectStatus.Valid
@@ -49,6 +56,8 @@ export class AreaRect {
 
   /* -------------------- Private methods -------------------- */
   get valid () {
-    return false;
+    return (
+      !!this.content.type && !!this.content.text
+    );
   }
 }

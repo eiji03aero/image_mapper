@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { StandbyContainer } from "../containers/StandbyContainer.jsx";
 import { CanvasContainer } from "../containers/CanvasContainer.jsx";
 import { MenuContainer } from "../containers/MenuContainer.jsx";
+import { RectContentEditorContainer } from "../containers/RectContentEditorContainer.jsx";
 import { FileInputContainer } from "../containers/FileInputContainer.jsx";
 
 import color from "../utils/color.js";
@@ -39,13 +40,17 @@ export class ImageMapper extends React.Component {
       <ImageMapperWrapperStyled>
         <ImageMapperStyled ref={this.box}>
 
-          {this.props.imageMapper.isStandby ? (
+          { this.props.imageMapper.isStandby ? (
             <StandbyContainer/>
           ) : (
             <React.Fragment>
               <CanvasContainer/>
               <MenuContainer/>
             </React.Fragment>
+          )}
+
+          { this.props.imageMapper.isEditRectContent && this.props.targetRectId && (
+            <RectContentEditorContainer/>
           )}
 
           <FileInputContainer/>

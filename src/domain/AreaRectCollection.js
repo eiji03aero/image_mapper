@@ -68,6 +68,15 @@ export class AreaRectCollection {
     this.areaRects = this.validateRects();
   }
 
+  updateRectContent (id, data) {
+    this.areaRects = _.map(this.areaRects, (rect) => {
+      if (rect.id === id) {
+        rect.updateContent(data);
+      }
+      return rect;
+    });
+  }
+
   /* -------------------- Private methods -------------------- */
   validateRects () {
     return _.reduce(this.areaRects, (accum, rect) => {

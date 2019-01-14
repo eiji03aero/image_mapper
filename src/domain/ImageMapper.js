@@ -59,7 +59,15 @@ export class ImageMapper {
     this.areaRectCollection.finishDraggingRect();
   }
 
+  findRect (id) {
+    return this.areaRectCollection.find(id);
+  }
+
   removeRect (id) {
     this.areaRectCollection.remove(id);
+  }
+
+  updateRectContent (id, data) {
+    this.areaRectCollection.updateRectContent(id, data);
   }
 }
