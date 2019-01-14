@@ -9,15 +9,16 @@ import { AppStatus } from "../constants.js";
 
 export class ImageMapper {
   constructor () {
-    this.appStatus     = AppStatus.Standby;
-    this.canvas        = new Canvas();
-    this.rects         = new AreaRectCollection();
-    this.backdropImage = new BackdropImage();
-    this.menu          = new Menu();
-    this.contentEditor = new RectContentEditor();
+    this.appStatus          = AppStatus.Standby;
+    this.canvas             = new Canvas();
+    this.areaRectCollection = new AreaRectCollection();
+    this.backdropImage      = new BackdropImage();
+    this.menu               = new Menu();
+    this.contentEditor      = new RectContentEditor();
   }
 
   get isStandby () { return this.appStatus === AppStatus.Standby; }
+  get isCreateRect () { return this.appStatus === AppStatus.CreateRect; }
 
   updateAppStatus (status) {
     this.appStatus = status;
@@ -30,5 +31,17 @@ export class ImageMapper {
 
   setBackdropImageDimention (params) {
     this.backdropImage.setDimention(params);
+  }
+
+  addNewRect (params) {
+    this.areaRectCollection.addNew(params);
+  }
+
+  updateNewRectStyle (params) {
+    this.areaRectCollection.updateNewRectStyle(params);
+  }
+
+  commitNewRect () {
+    this.areaRectCollection.commitNewRect();
   }
 }

@@ -29,6 +29,7 @@
 - ImageMapper
 - Canvas
 - AreaRect
+- AreaRectCollection
 - BackdropImage
 - RectContentEditor
 - Menu
@@ -56,7 +57,7 @@ ImageMapper {
     | EditRectContent
     >,
   canvas: Canvas,
-  rects: [ AreaRects ],
+  areaRectCollection: AreaRectCollection,
   backdropimage: BackdropImage,
   contentEditor: RectContentEditor,
   menu: Menu,
@@ -65,8 +66,13 @@ ImageMapper {
 Canvas {
 }
 
-AreaRects {
-  status: <enum Created | Valid | Invalid>,
+AreaRectCollection {
+  createStartPoint: { x: <number>, y: <number> },
+  areaRects: [ AreaRect ],
+}
+
+AreaRect {
+  status: <enum Creating | Valid | Invalid>,
   x1: <number>,
   x2: <number>,
   y1: <number>,

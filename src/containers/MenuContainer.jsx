@@ -12,6 +12,7 @@ export class MenuContainer extends React.Component {
   render () {
     return (
       <Menu
+        appStatus={this.context.imageMapper.appStatus}
         onClickCreateRect={e => this.context.onUpdateAppStatus(AppStatus.CreateRect)}
         onClickEditRect={e => this.context.onUpdateAppStatus(AppStatus.EditRect)}
         onClickEditRectContent={e => this.context.onUpdateAppStatus(AppStatus.EditRectContent)}

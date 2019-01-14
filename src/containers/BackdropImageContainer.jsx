@@ -11,7 +11,6 @@ export class BackdropImageContainer extends React.Component {
   render () {
     return (
       <BackdropImage
-        { ...this.props }
         imageUrl={this.context.imageMapper.backdropImage.imageUrl}
         onSetBackdropImageDimention={this.context.onSetBackdropImageDimention}
       />

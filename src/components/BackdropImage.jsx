@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 const BackdropImageStyled = styled.img`
   width: 100%;
+  user-select: none;
+  pointer-events: none;
 `;
 
 export class BackdropImage extends React.Component {
@@ -19,15 +21,10 @@ export class BackdropImage extends React.Component {
   }
 
   render () {
-    const {
-      width,
-      imageUrl,
-    } = this.props;
-
     return (
       <BackdropImageStyled
         ref={this.image}
-        src={imageUrl}
+        src={this.props.imageUrl}
       />
     );
   }
